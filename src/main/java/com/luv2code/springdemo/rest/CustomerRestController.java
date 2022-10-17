@@ -1,4 +1,4 @@
-package com.luv2code.springdemo.controller;
+package com.luv2code.springdemo.rest;
 
 import java.util.List;
 
@@ -27,7 +27,13 @@ public class CustomerRestController {
 	@GetMapping("/customers/{customerId}")
 	public Customer getCustomer(@PathVariable int customerId) {
 		
-		return customerService.getCustomer(customerId);
+		Customer theCustomer = customerService.getCustomer(customerId);
+		
+		if(theCustomer == null) {
+			throw new CustomerNotFoundException("Customer-id not found for " + customerId);
+		}
+		
+		return theCustomer;
 	}
 	
 	
